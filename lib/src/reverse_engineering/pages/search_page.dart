@@ -18,6 +18,8 @@ class SearchPage extends YoutubePage<_InitialData> {
 
   late final int estimatedResults = initialData.estimatedResults;
 
+  late final String? nextToken = initialData.continuationToken;
+
   /// InitialData
   SearchPage.id(this.queryString, _InitialData initialData)
       : super.fromInitialData(initialData);

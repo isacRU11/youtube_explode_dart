@@ -11,6 +11,8 @@ class SearchClient {
   /// Initializes an instance of [SearchClient]
   SearchClient(this._httpClient);
 
+  String? nextToken;
+
   /// Enumerates videos returned by the specified search query
   /// (from the video search page).
   /// The videos are sent in batch of 20 videos.
@@ -20,6 +22,8 @@ class SearchClient {
       String? priorityNextToken}) async {
     final page = await SearchPage.get(_httpClient, searchQuery,
         filter: filter, priorityNextToken: priorityNextToken);
+
+    nextToken = page.nextToken;
 
     return VideoSearchList(
       page.searchContent
