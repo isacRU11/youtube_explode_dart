@@ -134,10 +134,7 @@ class WatchPage extends YoutubePage<_InitialData> {
     return retry(httpClient, () async {
       final req = await httpClient.get(url, validate: true);
 
-      final cookies = req.headers['set-cookie']!;
-      final visitorInfoLive = _visitorInfoLiveExp.firstMatch(cookies)?.group(1);
-      final ysc = _yscExp.firstMatch(cookies)!.group(1)!;
-      final result = WatchPage.parse(req.body, visitorInfoLive ?? '', ysc);
+      final result = WatchPage.parse(req.body, "", "");
 
       if (!result.isOk) {
         throw TransientFailureException('Video watch page is broken.');
