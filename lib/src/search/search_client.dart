@@ -15,11 +15,11 @@ class SearchClient {
   /// (from the video search page).
   /// The videos are sent in batch of 20 videos.
   /// You [VideoSearchList.nextPage] to get the next batch of videos.
-  Future<VideoSearchList> search(
-    String searchQuery, {
-    SearchFilter filter = TypeFilters.video,
-  }) async {
-    final page = await SearchPage.get(_httpClient, searchQuery, filter: filter);
+  Future<VideoSearchList> search(String searchQuery,
+      {SearchFilter filter = TypeFilters.video,
+      String? priorityNextToken}) async {
+    final page = await SearchPage.get(_httpClient, searchQuery,
+        filter: filter, priorityNextToken: priorityNextToken);
 
     return VideoSearchList(
       page.searchContent

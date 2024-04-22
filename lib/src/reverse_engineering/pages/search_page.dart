@@ -35,10 +35,17 @@ class SearchPage extends YoutubePage<_InitialData> {
 
   ///
   static Future<SearchPage> get(
-    YoutubeHttpClient httpClient,
-    String queryString, {
-    SearchFilter filter = const SearchFilter(''),
-  }) {
+      YoutubeHttpClient httpClient, String queryString,
+      {SearchFilter filter = const SearchFilter(''),
+      String? priorityNextToken}) {
+    if (priorityNextToken != null) {
+      return retry(httpClient, () async {
+        final data =
+            await httpClient.sendContinuation('search', priorityNextToken);
+        return SearchPage.id(queryString, _InitialData(data));
+      });
+    }
+
     final url =
         'https://www.youtube.com/results?search_query=${Uri.encodeQueryComponent(queryString)}&sp=${filter.value}';
     return retry(httpClient, () async {
