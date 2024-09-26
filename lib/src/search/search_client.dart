@@ -18,10 +18,10 @@ class SearchClient {
   /// The videos are sent in batch of 20 videos.
   /// You [VideoSearchList.nextPage] to get the next batch of videos.
   Future<VideoSearchList> search(String searchQuery,
-      {SearchFilter filter = TypeFilters.video,
+      {String ytSearchFilterId = TypeFilters.video,
       String? priorityNextToken}) async {
     final page = await SearchPage.get(_httpClient, searchQuery,
-        filter: filter, priorityNextToken: priorityNextToken);
+        ytSearchFilterId: ytSearchFilterId, priorityNextToken: priorityNextToken);
 
     nextToken = page.nextToken;
 
@@ -54,9 +54,9 @@ class SearchClient {
   @Deprecated('Use SearchClient.search')
   Future<VideoSearchList> getVideos(
     String searchQuery, {
-    SearchFilter filter = TypeFilters.video,
+    String ytSearchFilterId = "",
   }) =>
-      search(searchQuery, filter: filter);
+      search(searchQuery, ytSearchFilterId: ytSearchFilterId);
 
   /// Enumerates results returned by the specified search query.
   /// The contents are sent in batch of 20 elements.
@@ -64,9 +64,9 @@ class SearchClient {
   /// You [SearchList.nextPage] to get the next batch of content.
   Future<SearchList> searchContent(
     String searchQuery, {
-    SearchFilter filter = const SearchFilter(''),
+    String ytSearchFilterId = "",
   }) async {
-    final page = await SearchPage.get(_httpClient, searchQuery, filter: filter);
+    final page = await SearchPage.get(_httpClient, searchQuery, ytSearchFilterId: ytSearchFilterId);
 
     return SearchList(page.searchContent, page, _httpClient);
   }
@@ -78,9 +78,9 @@ class SearchClient {
   /// Same as [SearchClient.search]
   Future<VideoSearchList> call(
     String searchQuery, {
-    SearchFilter filter = const SearchFilter(''),
+    String ytSearchFilterId = "",
   }) async =>
-      search(searchQuery, filter: filter);
+      search(searchQuery, ytSearchFilterId: ytSearchFilterId);
 
   /// Returns the suggestions youtube provide while search on the page.
   Future<List<String>> getQuerySuggestions(String query) async {
@@ -102,14 +102,14 @@ class SearchClient {
   /// For most cases [SearchClient.search] is enough.
   Future<SearchQuery> searchRaw(
     String searchQuery, {
-    SearchFilter filter = const SearchFilter(''),
+    String ytSearchFilterId = "",
   }) =>
-      SearchQuery.search(_httpClient, searchQuery, filter: filter);
+      SearchQuery.search(_httpClient, searchQuery, ytSearchFilterId: ytSearchFilterId);
 
   @Deprecated('Use searchRaw')
   Future<SearchQuery> queryFromPage(
     String searchQuery, {
-    SearchFilter filter = const SearchFilter(''),
+    String ytSearchFilterId = "",
   }) =>
-      searchRaw(searchQuery, filter: filter);
+      searchRaw(searchQuery, ytSearchFilterId: ytSearchFilterId);
 }

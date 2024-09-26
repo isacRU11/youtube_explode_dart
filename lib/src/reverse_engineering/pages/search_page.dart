@@ -38,7 +38,7 @@ class SearchPage extends YoutubePage<_InitialData> {
   ///
   static Future<SearchPage> get(
       YoutubeHttpClient httpClient, String queryString,
-      {SearchFilter filter = const SearchFilter(''),
+      {required String ytSearchFilterId,
       String? priorityNextToken}) {
     if (priorityNextToken != null) {
       return retry(httpClient, () async {
@@ -49,7 +49,7 @@ class SearchPage extends YoutubePage<_InitialData> {
     }
 
     final url =
-        'https://www.youtube.com/results?search_query=${Uri.encodeQueryComponent(queryString)}&sp=${filter.value}';
+        'https://www.youtube.com/results?search_query=${Uri.encodeQueryComponent(queryString)}&sp=${ytSearchFilterId}';
     return retry(httpClient, () async {
       final raw = await httpClient.getString(url);
       return SearchPage.parse(raw, queryString);
