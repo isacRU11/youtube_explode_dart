@@ -1,9 +1,7 @@
 import 'package:xml/xml.dart' as xml;
 
 import '../../extensions/helpers_extension.dart';
-import '../../retry.dart';
 import '../youtube_http_client.dart';
-
 ///
 class ClosedCaptionClient {
   final xml.XmlDocument root;
@@ -23,12 +21,10 @@ class ClosedCaptionClient {
   static Future<ClosedCaptionClient> get(
     YoutubeHttpClient httpClient,
     Uri url,
-  ) {
+  ) async {
     final formatUrl = url.replaceQueryParameters({'fmt': 'srv3'});
-    return retry(httpClient, () async {
-      final raw = await httpClient.getString(formatUrl);
-      return ClosedCaptionClient.parse(raw);
-    });
+    final raw = await httpClient.getString(formatUrl);
+    return ClosedCaptionClient.parse(raw);
   }
 }
 
