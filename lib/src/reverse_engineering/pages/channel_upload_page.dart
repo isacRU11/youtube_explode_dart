@@ -234,18 +234,19 @@ class _InitialData extends InitialData {
     if (isLockup) {
       return ChannelVideo(
         VideoId(video.getJson<String>(
-            'rendererContext/commandContext/onTap/innertubeCommand/watchEndpoint/videoId')!),
-        video.getJson<String>('metadata/primaryText/content') ?? '',
+                'rendererContext/commandContext/onTap/innertubeCommand/watchEndpoint/videoId') ??
+            video.getT<String>('contentId')!),
+        video.getJson<String>('metadata/lockupMetadataViewModel/title/content') ?? '',
         video
                 .getJson<String>(
-                    'imageOverlays/0/thumbnailOverlayTimeStatusRenderer/text/simpleText')
+                    'contentImage/thumbnailViewModel/overlays/0/thumbnailBottomOverlayViewModel/badges/0/thumbnailBadgeViewModel/text')
                 ?.toDuration() ??
             Duration.zero,
+        '',
         video.getJson<String>(
-                'thumbnailViewModel/thumbnailViewModel/image/sources/0/url') ??
+                'metadata/lockupMetadataViewModel/metadata/contentMetadataViewModel/metadataRows/0/metadataParts/1/text/content') ??
             '',
-        video.getJson<String>('metadata/metadataParts/1/text/content') ?? '',
-        video.getJson<String>('metadata/metadataText/content').parseInt() ?? 0,
+        0,
       );
     }
 
