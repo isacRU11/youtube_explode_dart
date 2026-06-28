@@ -182,7 +182,8 @@ extension StringUtility2 on String? {
       return null;
     }
 
-    final qty = int.parse(parts.first);
+    final qty = int.tryParse(parts.first);
+    if (qty == null) return null;
 
     // Try to get the unit
     final unit = parts[1];
