@@ -186,7 +186,12 @@ class _InitialData extends InitialData {
                     .nullIfWhitespace ??
                 renderer
                     .getJson<List<dynamic>>('viewCountText/runs')
-                    ?.firstOrNull
+                    // cast() is required before accessing elements: getJson returns
+                    // List<dynamic>, so firstOrNull yields dynamic, and Dart does not
+                    // resolve extension methods (getT) on dynamic at runtime, causing
+                    // a NoSuchMethodError.
+                    ?.cast<Map<String, dynamic>>()
+                    .firstOrNull
                     ?.getT<String>('text')
                     ?.stripNonDigits()
                     .nullIfWhitespace ??
@@ -204,7 +209,9 @@ class _InitialData extends InitialData {
           renderer.getJson<String>('publishedTimeText/simpleText'),
           renderer
                   .getJson<List<dynamic>>('viewCountText/runs')
-                  ?.elementAtSafe(1)
+                  // Same dynamic typing issue as above — cast before element access.
+                  ?.cast<Map<String, dynamic>>()
+                  .elementAtSafe(1)
                   ?.getT<String>('text')
                   ?.trim() ==
               'watching',
@@ -250,7 +257,9 @@ class _InitialData extends InitialData {
             '',
         renderer
                 .getJson<List<dynamic>>('videoCountText/runs')
-                ?.first
+                // Same dynamic typing issue — cast before element access.
+                ?.cast<Map<String, dynamic>>()
+                .first
                 .getT<String>('text')
                 .parseInt() ??
             -1,
