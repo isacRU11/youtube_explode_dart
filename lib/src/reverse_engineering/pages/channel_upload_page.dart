@@ -246,7 +246,9 @@ class _InitialData extends InitialData {
         video.getJson<String>(
                 'metadata/lockupMetadataViewModel/metadata/contentMetadataViewModel/metadataRows/0/metadataParts/1/text/content') ??
             '',
-        0,
+        video.getJson<String>(
+                  'metadata/lockupMetadataViewModel/metadata/contentMetadataViewModel/metadataRows/0/metadataParts/0/text/content')?.parseViewCount() 
+            ?? 0,
       );
     }
 

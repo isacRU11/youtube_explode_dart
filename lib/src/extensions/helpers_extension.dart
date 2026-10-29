@@ -92,7 +92,7 @@ extension StringUtility on String {
 
   DateTime parseDateTime() => DateTime.parse(this);
 
-  static final _viewCountExp = RegExp(r'^(\d+\.?\d+?)([KMB])? views$');
+  static final _viewCountExp = RegExp(r'^(\d+\.?\d+?)([KMB])?');
 
   /// Parse view count from a string formatted as an integer and its magnitude.
   /// Example: 5 views, 1.5K views, 2.3M views, 3.4B views.
